@@ -6,7 +6,7 @@ Dashboards
 
 {% block content %}
 <nav class="navbar navbar-light navbar-expand-md navigation-clean-button bg-light">
-  <div class="container"><a class="navbar-brand" href="#">Order Manager</a><button data-bs-toggle="collapse" data-bs-target="#navcol-1" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+  <div class="container"><a class="navbar-brand" href="{{ url_for('dash.home') }}">Order Manager</a><button data-bs-toggle="collapse" data-bs-target="#navcol-1" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="navbar-nav me-auto">
               <li class="nav-item"><a class="nav-link" href="{{ url_for('dash.home') }}">Dashboard</a></li>

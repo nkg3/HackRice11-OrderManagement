@@ -11,12 +11,10 @@ bp = Blueprint('dash', __name__, url_prefix='/dashboard')
 def home():
     return render_template('dashboard/dashboard.html')
 
-
 # Add new work order
 @bp.route("/addOrder")
 def add_order():
     return render_template('dashboard/orderform.html')
-
 
 # Monitor Routes
 @bp.route("/orders")

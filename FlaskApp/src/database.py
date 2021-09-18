@@ -2,7 +2,8 @@ import firebase_admin
 from firebase_admin.credentials import Certificate
 from firebase_admin import db
 from pathlib import Path
-from xlxs_parser import ExcelParser
+from ..Database.xlxs_parser import ExcelParser
+
 DEBUG: bool = False
 PRINT_DATA: bool = False
 
