@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     database.init_database(database_url, cred_path)
     database.set_with_dict({}, "/")  # clear database
-    database.set_with_excel(excel_path, "Equipment Details", (2, 12), (2, 9), "/equipment")
-    database.set_with_excel(excel_path, "Worker Details", (1, 11), (2, 6), "/worker")
-    database.set_with_excel(excel_path, "Facility Details", (2, 7), (2, 5), "/facility")
-    database.set_with_excel(excel_path, "Work Order Examples", (2, 32), (2, 8), "/work_orders")
+    database.set_with_excel(excel_path, "Equipment Details", (2, 12), (2, 9), "/Equipments")
+    database.set_with_excel(excel_path, "Worker Details", (1, 11), (2, 6), "/Workers")
+    database.set_with_excel(excel_path, "Facility Details", (2, 7), (2, 5), "/Facilities")
+    database.set_with_excel(excel_path, "Work Order Examples", (2, 32), (2, 8), "/WorkOrders")
