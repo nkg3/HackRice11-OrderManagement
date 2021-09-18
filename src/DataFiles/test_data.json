@@ -1,12 +1,9 @@
 {
-  "Bob":
+  "Equipment":
   {
-    "Name": "Bob",
-    "Age": 30
-  },
-    "Joe":
-  {
-    "Name": "Joe",
-    "Age": 50
+    "Pump":
+    {
+      "Probability of Failure": 10
+    }
   }
 }

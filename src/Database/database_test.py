@@ -9,6 +9,8 @@ cred = firebase_admin.credentials.Certificate(path)
 default_app = firebase_admin.initialize_app(cred, {'databaseURL': database_url})
 
 ref = db.reference("/")
+
 with open("../DataFiles/test_data.json", "r") as data:
     content = json.load(data)
+
 ref.set(content)
