@@ -1,5 +1,5 @@
 import functools
-from ..Database import database as db
+from . import database as db
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
