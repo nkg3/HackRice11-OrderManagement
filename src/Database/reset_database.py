@@ -2,9 +2,9 @@ from pathlib import Path
 import database
 
 """
-Clear database and parse the entire excel file into database
-set the url, credentials, and excel files
-use database.set_with_excel(<excel path>, <sheet name>, <row range (tuple)>, <col rage (tuple)>, <database dir reference>)
+Clear database and parse the entire excel file into database set the url, credentials, and excel files use 
+database.set_with_excel(<excel path>, <sheet name>, <row range (tuple)>, <col rage (tuple)>, <database dir 
+reference>) 
 """
 
 if __name__ == "__main__":
