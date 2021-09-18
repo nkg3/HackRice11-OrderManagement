@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "hackrice11-ordermanageme-327b0",
+  "private_key_id": "459bba87f3675978693c0e3827d9f9372b689f70",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCnN+e31WHW4ybf\n4mQyQ4lovmirrFrsSSk9hszAvOIS0WUsrdJcsb9qqYJvdmbr68F6iIhiAdAQSM03\n476tjDcBxbCT1jZ9MCUFfCKocQVSmQEqGmZoj2J4G+/eGG6yv5KPvb0UhO1P03GE\nKGyAq9VKIuC/vqiTf8HNa2ofj6pf+aAyG06SxnqRopjun9P78JedHr86rdlK/6BH\n+qQRld77DarTytn8ut8lupDgqmdDqWBrYvH3ZaZqZXnhVumGOC+KenJDj2ciUOO4\nEfXODUO0uaf0uUnSWw0NDWTgK4MHms58p/PtYqRAzROkwGUWYbPAddg8UAtC3E+n\nCtB9knZvAgMBAAECggEAAPdy7fOcUKyDItksAMRg13ZTpDu8p3qsHoXDH5FtRx7n\nFFE0PZfuG3+RAvREF7Sxq3PS7Kobr0m/HJsYP5Lnaym0Nxk5EGkxAEKdmqv96WJ8\nCL0aqXERaHtU3CD3sYMnpZAQYegmIlzTs6gI1IeUazd0usxZ13HDcjIJl4FyQoLB\np2Ozy3FqWZ8efWWX9Q3D3n1dJ7TVJsm+HGEdzpTdhzKB/0l4P054aYg8Rj67gwNA\ns9SGdzyVXFORo+U/RqvIP8jFl45Lkyzq89NmzFf6gIUs3NsQWBvKs54YsHy56BQ/\nzeU6ZqF4iIOUGmN3YLmZq2KrC9TlVUQkuEkY5olVLQKBgQDjYk/mCh8WiV8hs7rq\ndn12EeU7BawJm1O4mQfWyLlkr+W72ylihso36uNF1Id5I6lPg5PB6UA7YYAyoObJ\njjAUPQs5945rYcCXrJC3Ufz04+tEmccpj8iuFhSBqA+gzbdNW/hMSdBWyknWT3lP\na7zSofP32RGPVoziF6ees4dBowKBgQC8Qzik6n811Ja76+L7x6Lv0OVJXllrB3qk\nlpSFLrpj84Ig5Arco0tISLT1zWYbdd4+zRNaHPrHj96n6McujY9szJNYD7ZWGTSl\nMXIuU3Gb2l9ODET/JNvugxp31GD+2inctTf1OKm7DwvGwnp80NbYHmRNTDHfCZvp\nKMuy4aZ8xQKBgFZ29vz50lKGkEdHigdIYXL5YRqtkHrittZWUtXI5D62aHyj3Tvb\nF6Bl0GCobY+SEPrshM5S/RrXe6FE8B2q1PuNLuyvB1gsBslmVG1xXuhclwUyGLrk\nMyKHwOqA1tiGAXMISwXvd6rZJ3S4KeAajuXlsdkIkRXZip8a8aF2kTNTAoGBAKFg\ntgOYB6erLfK0h4PwY1lTJdi4icnXRWgks/deUOQw7pEnKbBsQbIasRQrF6Xeab5H\nqJkMUmQSjXg9b9AWBKXszzkjbtdrD9ezBP91A+PnUt7iYZqci/Jua5fgc6zCcjQB\nG5CXG9d/VEbymnC3zBLCKpSgBff8kqtRDxutljtJAoGBAJYxbxiYVe5o9z3C6TfB\nQibOTD28biO8KpCXGuWtrlV0o/MUlp2dtIaHFeFMLyKPCRq7+QR2Z3q7aoAO2hJv\nWrXZIWH02g25b4rjKIo+Csd5HPo9vcxp+v7wPbm3LUBOyb/sViALOYZXcSf4mKBC\ndQEny6pHEMxGAckTVYks1xcV\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-jmktm@hackrice11-ordermanageme-327b0.iam.gserviceaccount.com",
+  "client_id": "115618098523069768565",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jmktm%40hackrice11-ordermanageme-327b0.iam.gserviceaccount.com"
+}
