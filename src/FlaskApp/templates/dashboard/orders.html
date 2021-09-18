@@ -1,0 +1,103 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block subcontent %}
+<div class="card my-3 ">
+    <div class="card-body">
+        <h4 class="card-title">In-Progress Work Orders</h4>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Technician</th>
+                        <th>Facility ID</th>
+                        <th>Equipment Type</th>
+                        <th>Equipment ID</th>
+                        <th>Priority</th>
+                        <th>Est. Time Completed</th>
+                        <th>Time Submitted</th>
+                        <th>Time Assigned</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1001</td>
+                        <td>Joe</td>
+                        <td>Fac1</td>
+                        <td>Pump</td>
+                        <td>P032</td>
+                        <td>5</td>
+                        <td>07:15:20</td>
+                        <td>02:03:15</td>
+                        <td>04:15:20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="card my-3">
+    <div class="card-body">
+        <h4 class="card-title">Unassigned Work Orders</h4>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Facility ID</th>
+                        <th>Equipment Type</th>
+                        <th>Equipment ID</th>
+                        <th>Priority</th>
+                        <th>Time Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1001</td>
+                        <td>Fac1</td>
+                        <td>Pump</td>
+                        <td>P032</td>
+                        <td>5</td>
+                        <td>02:03:15</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="card my-3 ">
+    <div class="card-body">
+        <h4 class="card-title">Completed Work Orders</h4>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Technician</th>
+                        <th>Facility ID</th>
+                        <th>Equipment Type</th>
+                        <th>Equipment ID</th>
+                        <th>Priority</th>
+                        <th>Time Completed</th>
+                        <th>Time Submitted</th>
+                        <th>Time Assigned</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1001</td>
+                        <td>Joe</td>
+                        <td>Fac1</td>
+                        <td>Pump</td>
+                        <td>P032</td>
+                        <td>5</td>
+                        <td>07:15:20</td>
+                        <td>02:03:15</td>
+                        <td>04:15:20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
