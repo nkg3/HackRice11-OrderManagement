@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboards
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-light navbar-expand-md navigation-clean-button bg-light">
+  <div class="container"><a class="navbar-brand" href="#">Order Manager</a><button data-bs-toggle="collapse" data-bs-target="#navcol-1" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navcol-1">
+          <ul class="navbar-nav me-auto">
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('dash.home') }}">Dashboard</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Add Work Order</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{ url_for('dash.add_order') }}">Add Worker</a></li>
+              <li class="nav-item"></li>
+              <li class="nav-item dropdown"><a aria-expanded="false" data-bs-toggle="dropdown" class="dropdown-toggle nav-link" href="#">Monitor </a>
+                  <div class="dropdown-menu"><a class="dropdown-item" href="{{ url_for('dash.orders') }}">Orders</a><a class="dropdown-item" href="#">Workers</a><a class="dropdown-item" href="#">Facilities</a><a class="dropdown-item" href="#">Equipment</a></div>
+              </li>
+          </ul>
+          {% if g.user %}
+            
+          {% else %}
+          <span class="navbar-text actions"><a class="login" href="#">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span>
+          {% endif %}
+          
+          
+      </div>
+  </div>
+</nav>
+<div class="container">
+  {% block subcontent %}{%endblock%}
+</div>
+
+
+{% endblock %}

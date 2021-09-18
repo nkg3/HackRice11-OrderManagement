@@ -1,0 +1,89 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block subcontent %}
+<div class = "container-fluid justify-content-center" id="orders">
+    <div class="row justify-content-center my-4">
+        <div class="col-sm-6">
+            <h3>Create new work order</h3>
+            <form method="post">
+                <div class="mb-3"><label class="form-label">Facility</label><select class="form-select" required="">
+                    <optgroup label="Select a facility">
+                        <option value="" selected="">Select a Facility</option>
+                        <option value="Fac1">Facility 1</option>
+                        <option value="Fac2">Facility 2</option>
+                        <option value="Fac3">Facility 3</option>
+                    </optgroup>
+                    </select></div>
+                <div class="mb-3"><label class="form-label">Equipment Type</label><select class="form-select" required="">
+                        <optgroup label="Select an Equipment Type">
+                            <option value="" selected="">Select an Equipment Type</option>
+                            <option value="Pump" selected="">Pump</option>
+                            <option value="Compressor">Compressor</option>
+                            <option value="Seperator">Seperator</option>
+                            <option value="Sensor">Sensor</option>
+                            <option value="Security">Security</option>
+                            <option value="Electricity">Electricity</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Vehicle">Vehicle</option>
+                            <option value="HVAC">HVAC</option>
+                            <option value="Conveyer">Conveyer</option>
+                        </optgroup>
+                    </select></div>
+
+                <label for="equipment-id" class="form-label">Equipment ID</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">:</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="ID" id="equipment-id" aria-label="ID" aria-describedby="basic-addon1">
+                </div>
+
+                <label class="form-label">Priority</label>
+                <div class="mb-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                        <label class="form-check-label" for="inlineRadio1">1</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+                        <label class="form-check-label" for="inlineRadio2">2</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+                        <label class="form-check-label" for="inlineRadio3">3</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
+                        <label class="form-check-label" for="inlineRadio2">4</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5">
+                        <label class="form-check-label" for="inlineRadio3">5</label>
+                      </div>
+                </div>
+
+                <div class="mb-3"><label class="form-label">Time to complete</label>
+                    <input type = "text" class="form-control" aria-label="ID">
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary d-block w-100" type="submit">Submit work order</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <h3>Upload File (.xlsx)</h3>
+            <form method="post">
+                <div class="mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile">
+                      </div>
+                </div>
+                  <div class="mb-3">
+                    <button class="btn btn-primary d-block w-100" type="submit">Upload File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
