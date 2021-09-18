@@ -26,6 +26,20 @@ def set_with_dict(data: dict, dir_ref: str = "/"):
         print(data)
 
 
+def update(dir_ref: str, data: dict):
+    reference = db.reference(dir_ref)
+    reference.update(data)
+    if DEBUG:
+        print("[Database update] reference dir: " + dir_ref)
+    if PRINT_DATA:
+        print(data)
+
+
+def remove(dir_ref: str):
+    reference = db.reference(dir_ref)
+    reference.delete()
+
+
 def set_with_excel(path: str, sheet_name: str, row_range: tuple, col_range: tuple, dir_ref: str = "/"):
     reference = db.reference(dir_ref)
     parser: ExcelParser = ExcelParser(Path(path))
