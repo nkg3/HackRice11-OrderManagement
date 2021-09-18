@@ -4,7 +4,7 @@ from firebase_admin import db
 from pathlib import Path
 from xlxs_parser import ExcelParser
 DEBUG: bool = False
-PRINT_DATA: bool = True
+PRINT_DATA: bool = False
 
 
 """
