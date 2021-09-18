@@ -4,6 +4,12 @@ from openpyxl.worksheet.worksheet import Worksheet
 from pathlib import Path
 
 
+def remove_symbol(word: str, symbol: str):
+    if word[-1] == symbol:
+        return word[:-1]
+    return word
+
+
 class ExcelParser:
     __wb: Workbook
     __sheet_names: list
@@ -24,9 +30,9 @@ class ExcelParser:
         for i, row in enumerate(rows):
             if i == 0:
                 for cell in row:
-                    keys.append(str(cell.value).removesuffix("#"))
+                    keys.append(remove_symbol(str(cell.value), "#"))
             else:
-                identifier: str = str(row[0].value).removesuffix("#")
+                identifier: str = remove_symbol(str(row[0].value), "#")
                 data[identifier] = {}
                 for j in range(len(row)):
                     data[identifier][keys[j]] = str(row[j].value)
