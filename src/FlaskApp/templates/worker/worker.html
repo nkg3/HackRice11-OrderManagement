@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Work Orders
+{% endblock %}
+
+{% block content %}
+<div class = "container-fluid justify-content-center" id="orders">
+    {% for order in orders %}
+        <div class="row justify-content-center mb-4">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        {% for key, value in orders[order].items() %}
+                            <ul>
+                                <h2 style="display:inline">{{key}} : </h2>
+                                <h3 style="display:inline">{{value}} </h3>
+                            </ul>
+                        {% endfor %}
+                        <form action="{{ url_for('worker.finish', id=orders[order]['order no.']) }}" method = "post">
+                            <input type="submit" id='script' name="submit" value="Run Script">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div> 
+{% endblock %}

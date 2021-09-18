@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 openpyxl = "*"
 firebase-admin = "*"
+twilio = "*"
+python-dotenv = "*"
+flask = "*"
 
 [dev-packages]
 
