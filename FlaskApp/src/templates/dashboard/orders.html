@@ -14,24 +14,20 @@
                         <th>Equipment Type</th>
                         <th>Equipment ID</th>
                         <th>Priority</th>
-                        <th>Est. Time Completed</th>
                         <th>Time Submitted</th>
-                        <th>Time Assigned</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for order in work_orders %}
-                    {% if work_orders[order]["inProgress"] == "True" %}
+                    {% if work_orders[order]["inProgress"] == "True" and work_orders[order]["done"] == "False" %}
                     <tr>
                         <td>{{order}}</td>
-                        <td>Joe</td>
+                        <td>{{ work_orders[order]["Assigned"] }}</td>
                         <td>{{ work_orders[order]["Facility"] }}</td>
                         <td>{{work_orders[order]["Equipment Type"]}}</td>
                         <td>{{work_orders[order]["Equipment ID"]}}</td>
                         <td>{{work_orders[order]["Priority(1-5)"]}}</td>
-                        <td>07:15:20</td>
                         <td>{{work_orders[order]["Submission Timestamp"]}}</td>
-                        <td>04:15:20</td>
                     </tr>
                     {% endif %}
                     {% endfor %}
@@ -90,21 +86,23 @@
                         <th>Priority</th>
                         <th>Time Completed</th>
                         <th>Time Submitted</th>
-                        <th>Time Assigned</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for order in work_orders %}
+                    {% if work_orders[order]["done"] == "True" %}
                     <tr>
-                        <td>1001</td>
-                        <td>Joe</td>
-                        <td>Fac1</td>
-                        <td>Pump</td>
-                        <td>P032</td>
-                        <td>5</td>
-                        <td>07:15:20</td>
-                        <td>02:03:15</td>
-                        <td>04:15:20</td>
+                        <td>{{order}}</td>
+                        <td>{{ work_orders[order]["Assigned"] }}</td>
+                        <td>{{ work_orders[order]["Facility"] }}</td>
+                        <td>{{work_orders[order]["Equipment Type"]}}</td>
+                        <td>{{work_orders[order]["Equipment ID"]}}</td>
+                        <td>{{work_orders[order]["Priority(1-5)"]}}</td>
+                        <td>{{work_orders[order]["Completion Timestamp"]}}</td>
+                        <td>{{work_orders[order]["Submission Timestamp"]}}</td>
                     </tr>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

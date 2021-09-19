@@ -1,5 +1,6 @@
 import functools
 from . import database as db
+from . import scheduler
 from datetime import datetime
 
 from flask import (
@@ -18,7 +19,17 @@ def hello():
 def finish(id):
     order = db.get_under_directory('/WorkOrders/'+str(id))
     order['done'] = "True"
-    order['inProgress'] = "False"
+    order['inProgress'] = "True"
     order['Completion Timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     db.update('/WorkOrders/'+str(id), order)
+    worker = db.get_under_directory('/Workers/'+str(order['Assigned']))
+    worker['inTask'] = 'False'
+    worker['assigned'] = 'None'
+    worker['TasktimeLeft'] = '0'
+    db.update('/Workers/'+str(order['Assigned']), worker)
+
+    if datetime.now().hour >= 12:
+        scheduler.updateWholeThing('Evening')
+    else:
+        scheduler.updateWholeThing('Morning')
     return redirect(url_for('worker.hello'))

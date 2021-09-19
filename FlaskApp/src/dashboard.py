@@ -2,6 +2,7 @@ import functools
 import os
 
 from . import database as db
+from . import scheduler
 from datetime import datetime
 
 from flask import (
@@ -16,7 +17,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-bp = Blueprint('dash', __name__, url_prefix='/dashboard')
+bp = Blueprint('dash', __name__, url_prefix='')
 
 # Dashboard home
 @bp.route("/")
@@ -69,6 +70,10 @@ def add_order():
             #    error = 'Something went wrong! Try again later'
 
         flash(error)
+        if datetime.now().hour >= 12:
+            scheduler.updateWholeThing('Evening')
+        else:
+            scheduler.updateWholeThing('Morning')
 
     return render_template('dashboard/orderform.html')
 
@@ -93,7 +98,11 @@ def upload_file():
             db.demo_parse_excel_to_db(filepath)
             if os.path.exists(filepath):
                 os.remove(filepath)
-            return redirect(url_for('dash.add_order'))
+            if datetime.now().hour >= 12:
+                scheduler.updateWholeThing('Evening', True)
+            else:
+                scheduler.updateWholeThing('Morning', True)
+            return redirect(url_for('dash.home'))
     
     return redirect(url_for('dash.add_order'))
 

@@ -3,8 +3,7 @@ import pandas as pd
 import numpy as np
 import math
 sys.path.append('/Users/victorkaplan/Desktop/HackRice/HackRice11-OrderManagement/src/Database')
-import database
-from IPython.display import clear_output
+from . import database, distance_matrix
 
 #FINAL VERSION (2)****************
 
@@ -59,7 +58,7 @@ def dist(facilityloc1, facilityloc2, facildf):
     long2 = float((facildf.loc[facildf['Facility'] == facilityloc2])['Longitude'])
     faccords2 = [lat2, long2]
 
-    return int(distance_matrix.distance_result(faccords1,faccords2)[1].split(' ')[0])/10
+    return int(distance_matrix.distance_result(faccords1,faccords2)[1])/10
 
 def rarity(equipdf):
     dicti = {}
@@ -123,17 +122,17 @@ def update(pair, workerdf, workOrderdf, time, facilitydf):
     facilitydf.at[oldlocinx, 'workersIn'] -= 1
     facilitydf.at[newlocinx, 'workersIn'] += 1
 
-    workOrderdf.at[pair[1], 'inProgress'] = True
+    workOrderdf.at[pair[1], 'inProgress'] = "True"
     workOrderdf.at[pair[1], 'timeLeft'] = time
     workOrderdf.at[pair[1], 'Assigned'] = workerdf.at[pair[0], 'Name']
 
-    workerdf.at[pair[0], 'inTask'] = True
+    workerdf.at[pair[0], 'inTask'] = "True"
     workerdf.at[pair[0], 'Loc'] = newloc
     workerdf.at[pair[0], 'TasktimeLeft'] = time
     workerdf.at[pair[0], 'assigned'] = workOrderdf.at[pair[1], 'Work Order ']
 
 def assignAll(workerdf, workOrderdf, facilitydf, shift, equipdf):
-    for i in range(len(workOrderdf.index)):
+    for i in range(len(workOrderdf.index)*4):
 #         print(workerdf['inTast'])
 #         print(False in list(workerdf['inTast']))
         if ('False' in list(workerdf['inTask'])):
@@ -144,7 +143,7 @@ def assignAll(workerdf, workOrderdf, facilitydf, shift, equipdf):
 
 
 #write to db function:
-def updatedb():
+def updatedb(workers, workOrders, facil):
     workersName = workers.copy()
     workersName.index = workersName['Name']
     workersttodict = workersName.to_dict(orient = 'index')
@@ -164,20 +163,21 @@ def updatedb():
     return None
 
 #overall function:
-def updateWholeThing(shiftStr):
+def updateWholeThing(shiftStr, shiftChange=False):
     read = readin()
     workers = read[0]
     equip= read[1]
     facil= read[2]
     workOrders= read[3]
 
-    resetShift(shiftStr, facil, workers)
+    if shiftChange:
+        resetShift(shiftStr, facil, workers)
 
     workOrders = priority(workOrders)
     workers.head()
 
     assignAll(workers, workOrders, facil, shiftStr, equip)
 
-    updatedb()
+    updatedb(workers, workOrders, facil)
 
     return None

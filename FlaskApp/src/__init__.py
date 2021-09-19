@@ -26,9 +26,9 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route("/")
-    def hello():
-        return render_template('base.html')
+    #@app.route("/")
+    #def hello():
+    #    return render_template('base.html')
 
     @app.context_processor
     def get_work_orders():
@@ -54,7 +54,10 @@ def create_app(test_config=None):
             return database.get_under_directory('/Equipments')
         return dict(get_workers=get_workers, get_facilities=get_facilities, get_work_orders=get_work_orders, get_equipments=get_equipments)
 
-    database.init_database('https://hackrice11-ordermanageme-327b0-default-rtdb.firebaseio.com/', './DataFiles/database_private_key.json')
+    try:
+        database.init_database('https://hackrice11-ordermanageme-327b0-default-rtdb.firebaseio.com/', './DataFiles/database_private_key.json')
+    except ValueError:
+        pass
 
     app.register_blueprint(worker.bp)
     app.register_blueprint(dashboard.bp)

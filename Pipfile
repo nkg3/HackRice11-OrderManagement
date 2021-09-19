@@ -9,6 +9,8 @@ firebase-admin = "*"
 twilio = "*"
 python-dotenv = "*"
 flask = "*"
+pandas = "*"
+googlemaps = "*"
 
 [dev-packages]
 
