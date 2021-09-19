@@ -11,12 +11,12 @@ orders = {}
 
 bp = Blueprint('worker', __name__, url_prefix='/worker')
 
-@bp.route("/")
-def hello():
-    return render_template('worker/worker.html')
+@bp.route("/<Name>")
+def hello(Name):
+    return render_template('worker/worker.html', name=Name)
 
-@bp.route("/<int:id>/delete", methods = ('POST',))
-def finish(id):
+@bp.route("/<Name>/<int:id>/delete", methods = ('POST',))
+def finish(id, Name):
     order = db.get_under_directory('/WorkOrders/'+str(id))
     order['done'] = "True"
     order['inProgress'] = "True"
@@ -32,4 +32,4 @@ def finish(id):
         scheduler.updateWholeThing('Evening')
     else:
         scheduler.updateWholeThing('Morning')
-    return redirect(url_for('worker.hello'))
+    return redirect(url_for('worker.hello', Name=Name))

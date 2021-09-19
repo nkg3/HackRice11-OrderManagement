@@ -134,11 +134,11 @@ def update(pair, workerdf, workOrderdf, time, facilitydf):
     workerdf.at[pair[0], 'assigned'] = workOrderdf.at[pair[1], 'Work Order ']
 
     notify = notifier.Notifier()
-    start_time = datetime.now() + dt.timedelta(int(dist(workOrderdf.at[pair[1], 'Facility'], workerdf.at[pair[0], 'Loc']
-                                                        , facilitydf)))
-    end_time = datetime.now() + dt.timedelta(int(workOrderdf.at[pair[1], 'Time to Complete']))
+    start_time = datetime.now() + dt.timedelta(seconds=(int(dist(workOrderdf.at[pair[1], 'Facility'], workerdf.at[pair[0], 'Loc']
+                                                        , facilitydf))*3600))
+    end_time = datetime.now() + dt.timedelta(seconds=(int(workOrderdf.at[pair[1], 'Time to Complete'])*3600))
     notify.notify_new_order(workerdf.at[pair[0], 'Name'], '+13019198375', workOrderdf.at[pair[1], 'Facility'],
-                            workOrderdf.at[pair[1], 'Equipment ID'], start_time=start_time, end_time=end_time)
+                            workOrderdf.at[pair[1], 'Equipment ID'], start_time, end_time)
 
 def assignAll(workerdf, workOrderdf, facilitydf, shift, equipdf):
     for i in range(len(workOrderdf.index)*4):

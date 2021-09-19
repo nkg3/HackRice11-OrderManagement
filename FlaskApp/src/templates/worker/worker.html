@@ -7,6 +7,7 @@ Work Orders
 {% block content %}
 <div class = "container-fluid justify-content-center" id="orders">
     {% for order in work_orders %}
+    {% if work_orders[order]['Assigned'] == name%}
         <div class="row justify-content-center my-5">
             <div class="col-sm-4">
                 <div {%if work_orders[order]["done"] == "True" %}class="card bg-success"{%else%}class="card bg-secondary"{%endif%}>
@@ -24,7 +25,7 @@ Work Orders
                             {%endif%}
                         {% endfor %}
                         <ul>
-                            <form action="{{ url_for('worker.finish', id=order) }}" method = "post">
+                            <form action="{{ url_for('worker.finish', id=order, Name=name) }}" method = "post">
                                 {%if work_orders[order]["done"] == "True" %}
                                 <input class="btn btn-primary" type="submit" id='script' name="submit" value="Work Order Completed" disabled>
                                 {%else%}
@@ -38,6 +39,7 @@ Work Orders
                 </div>
             </div>
         </div>
+    {% endif %}
     {% endfor %}
     </div>
 </div> 

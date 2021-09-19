@@ -46,7 +46,7 @@ def addEvent(summary: str, location: str, description: str, start_time: datetime
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                '../DataFiles/credentials.json', SCOPES)
+                './DataFiles/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open('token.json', 'w') as token:
@@ -72,7 +72,7 @@ class Notifier:
 
     def notify_new_order(self, worker_name: str, phone_number: str, facility_id: str, equipment_id: str,
                          start_time: datetime, end_time: datetime) -> str:
-        body_str = 'New work order assigned to ' + worker_name + '. Report to ' + equipment_id + ' at ' + facility_id + '.'
+        body_str = 'New work order assigned to ' + worker_name + '. Report to ' + equipment_id + ' at ' + facility_id + '. Submit task at https://localhost:5000/worker/'+worker_name 
         message = self.client.messages.create(
                                 body=body_str,
                                 from_='+17133641490',
