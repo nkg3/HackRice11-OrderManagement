@@ -34,6 +34,14 @@ def create_app(test_config=None):
         return dict(work_orders=database.get_under_directory('/WorkOrders'))
 
     @app.context_processor
+    def get_facilities():
+        return dict(facilities=database.get_under_directory('/Facilities'))
+
+    @app.context_processor
+    def get_equipments():
+        return dict(equipments=database.get_under_directory('/Equipments'))
+
+    @app.context_processor
     def db_processor():
         def get_workers():
             return database.get_under_directory('/Workers')
