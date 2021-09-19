@@ -50,12 +50,15 @@ def priority(workOrderdf):
     times = workOrderdf['Submission Timestamp']
     maxtime = max(times)
     timePrior = ([-(time - maxtime).days for time in times])
+    print((maxtime))
+    print((times[0]))
+    print((maxtime - times[0]))
+    print(timePrior)
     final = (timePrior) + (realPriors)
     workOrderdf['newPrior'] = final
     return workOrderdf
 
 workOrders = priority(workOrders)
-workOrders.head()
 
 #matching functions:
 def dist(facilityloc1, facilityloc2):
@@ -63,17 +66,36 @@ def dist(facilityloc1, facilityloc2):
         return 0
     return 2
 
-def bid(workerdf, equipType, facility, timeToComplete, shift):
+def rarity(equipdf):
+    dicti = {}
+    for i in equipdf.index:
+        count = 0
+        count += int(equipdf.at[i, 'Fac1'])
+        count += int(equipdf.at[i, 'Fac2'])
+        count += int(equipdf.at[i, 'Fac3'])
+        count += int(equipdf.at[i, 'Fac4'])
+        count += int(equipdf.at[i, 'Fac5'])
+        dicti[equipdf.at[i, 'Equipment']] = 10/count
+    return dicti
+
+def resetShift(shift, facilitydf, workersdf):
+    facilitydf['workersIn'] = [1,1,1,1,1]
+    workersdf['Loc'] = ['Fac1','Fac2','Fac1','Fac3','Fac2','Fac3','Fac4','Fac4','Fac5', 'Fac5']
+    return None
+
+
+def bid(workerdf, equipType, facility, timeToComplete, shift, equipdf):
     df = workerdf.copy()
     df = df.loc[df['inTask'] == 'False']
     df = df.loc[df['Shifts'] == shift]
     df = df[df['Equipment Certification(s)'].str.contains(equipType,case=False)]
     final = []
+    rarities = rarity(equipdf)
     for i in df.index:
-        final.append((i, dist(df.at[i, 'Loc'], facility) + int(timeToComplete)))
+        final.append((i, dist(df.at[i, 'Loc'], facility) + int(timeToComplete) + rarities[equipType]))
     return final
 
-def pair(workerdf, workOrderdf, facilitydf, shift):
+def pair(workerdf, workOrderdf, facilitydf, shift, equipdf):
     sliceddf = workOrderdf.loc[workOrderdf['inProgress'] == 'False']
     currentJob = sliceddf['newPrior'].idxmax()
     print(list(sliceddf['newPrior']))
@@ -84,7 +106,7 @@ def pair(workerdf, workOrderdf, facilitydf, shift):
         workOrderdf.at[currentJob, 'newPrior'] -= 1
         return None
 
-    bids = bid(workerdf, workOrderdf.at[currentJob, 'Equipment Type'], workOrderdf.at[currentJob, 'Facility'], workOrderdf.at[currentJob, 'Time to Complete'], shift)
+    bids = bid(workerdf, workOrderdf.at[currentJob, 'Equipment Type'], workOrderdf.at[currentJob, 'Facility'], workOrderdf.at[currentJob, 'Time to Complete'], shift, equipdf)
     lowest = math.inf
     lowestPair = None
     for bidPair in bids:
@@ -92,7 +114,7 @@ def pair(workerdf, workOrderdf, facilitydf, shift):
             lowest = bidPair[1]
             lowestPair = bidPair
     if lowestPair != None:
-        return (workerdf.at[lowestPair[0], 'Name'], workOrderdf.at[currentJob, 'Work Order ']), (lowestPair[0],currentJob), lowest
+        return (workerdf.at[lowestPair[0], 'Name'], workOrderdf.at[currentJob, 'Work Order ']), (lowestPair[0],currentJob), int(workOrderdf.at[currentJob, 'Time to Complete'])+int(dist(workOrderdf.at[currentJob, 'Facility'], workerdf.at[lowestPair[0], 'Loc']))
     workOrderdf.at[currentJob, 'newPrior'] -= 1
     return None
 
@@ -111,14 +133,15 @@ def update(pair, workerdf, workOrderdf, time, facilitydf):
     workerdf.at[pair[0], 'inTask'] = True
     workerdf.at[pair[0], 'Loc'] = newloc
     workerdf.at[pair[0], 'TasktimeLeft'] = time
+    workerdf.at[pair[0], 'assigned'] = pair[1]
 
-def assignAll(workerdf, workOrderdf, facilitydf, shift):
+def assignAll(workerdf, workOrderdf, facilitydf, shift, equipdf):
     for i in range(len(workOrderdf.index)*2):
 #         print(workerdf['inTast'])
 #         print(False in list(workerdf['inTast']))
         if ('False' in list(workerdf['inTask'])):
             print(i)
-            pair1 = pair(workerdf, workOrderdf, facilitydf, shift)
+            pair1 = pair(workerdf, workOrderdf, facilitydf, shift, equipdf)
             if pair1 != None:
                 update(pair1[1], workerdf, workOrderdf, pair1[2], facilitydf)
 
