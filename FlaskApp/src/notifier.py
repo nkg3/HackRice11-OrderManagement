@@ -20,7 +20,3 @@ class Notifier:
                                 to=phone_number
                                 )
         return(message.sid)
-
-
-n1 = Notifier()
-n1.notify_new_order('Nik Gautam', '+13019198375', 'Fac3', 'El032', '02:00:00')

@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, render_template
 from . import worker, dashboard, database
+from .notifier import Notifier
 
 def create_app(test_config=None):
     # create and configure the app
@@ -44,11 +45,9 @@ def create_app(test_config=None):
             return database.get_under_directory('/Equipments')
         return dict(get_workers=get_workers, get_facilities=get_facilities, get_work_orders=get_work_orders, get_equipments=get_equipments)
 
-    database.init_database('https://hackrice11-ordermanageme-327b0-default-rtdb.firebaseio.com', './DataFiles/database_private_key.json')
+    database.init_database('https://hackrice11-ordermanageme-327b0-default-rtdb.firebaseio.com/', './DataFiles/database_private_key.json')
 
     app.register_blueprint(worker.bp)
     app.register_blueprint(dashboard.bp)
-
-    worker.create_orders()
 
     return app
