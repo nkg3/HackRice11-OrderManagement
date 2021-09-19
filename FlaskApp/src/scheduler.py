@@ -3,7 +3,9 @@ import pandas as pd
 import numpy as np
 import math
 sys.path.append('/Users/victorkaplan/Desktop/HackRice/HackRice11-OrderManagement/src/Database')
-from . import database, distance_matrix
+from . import database, distance_matrix, notifier
+from datetime import datetime
+import datetime as dt
 
 #FINAL VERSION (2)****************
 
@@ -131,6 +133,13 @@ def update(pair, workerdf, workOrderdf, time, facilitydf):
     workerdf.at[pair[0], 'TasktimeLeft'] = time
     workerdf.at[pair[0], 'assigned'] = workOrderdf.at[pair[1], 'Work Order ']
 
+    notify = notifier.Notifier()
+    start_time = datetime.now() + dt.timedelta(int(dist(workOrderdf.at[pair[1], 'Facility'], workerdf.at[pair[0], 'Loc']
+                                                        , facilitydf)))
+    end_time = datetime.now() + dt.timedelta(int(workOrderdf.at[pair[1], 'Time to Complete']))
+    notify.notify_new_order(workerdf.at[pair[0], 'Name'], '+13019198375', workOrderdf.at[pair[1], 'Facility'],
+                            workOrderdf.at[pair[1], 'Equipment ID'], start_time=start_time, end_time=end_time)
+
 def assignAll(workerdf, workOrderdf, facilitydf, shift, equipdf):
     for i in range(len(workOrderdf.index)*4):
 #         print(workerdf['inTast'])
@@ -179,5 +188,6 @@ def updateWholeThing(shiftStr, shiftChange=False):
     assignAll(workers, workOrders, facil, shiftStr, equip)
 
     updatedb(workers, workOrders, facil)
+
 
     return None
