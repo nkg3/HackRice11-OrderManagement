@@ -114,7 +114,7 @@ def demo_parse_excel_to_db(path: str):
     set_with_excel(excel_path, "Facility Details", (2, 7), (2, 5), add_keys=[("workersIn", "0")], dir_ref="/Facilities")
     set_with_excel(excel_path, "Work Order Examples", (2, 32), (2, 8),
                    add_keys=[("Assigned", "None"), ("done", "False")
-                       , ("inProgress", "False"), ("newPrior", "0"), ("timeLeft", "0")], dir_ref="/WorkOrders")
+                       , ("inProgress", "False"), ("newPrior", "0"), ("timeLeft", "0"), ("Completion Timestamp", "N/A")], dir_ref="/WorkOrders")
 
 
 class ExcelParser:
