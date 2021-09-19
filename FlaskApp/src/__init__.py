@@ -3,13 +3,18 @@ import os
 from flask import Flask, render_template
 from . import worker, dashboard, database
 from .notifier import Notifier
+from werkzeug.utils import secure_filename
 
 def create_app(test_config=None):
     # create and configure the app
+    UPLOAD_FOLDER = './Uploads'
+    ALLOWED_EXTENSIONS = {'xlxs'}
+
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY='dev'
+        SECRET_KEY='dev',
     )
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
     if test_config is None:
         # load the instance config, if it exists, when not testing

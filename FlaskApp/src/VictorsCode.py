@@ -133,7 +133,7 @@ def update(pair, workerdf, workOrderdf, time, facilitydf):
     workerdf.at[pair[0], 'inTask'] = True
     workerdf.at[pair[0], 'Loc'] = newloc
     workerdf.at[pair[0], 'TasktimeLeft'] = time
-    workerdf.at[pair[0], 'assigned'] = pair[1]
+    workerdf.at[pair[0], 'assigned'] = workOrderdf.at[pair[1], 'Work Order ']
 
 def assignAll(workerdf, workOrderdf, facilitydf, shift, equipdf):
     for i in range(len(workOrderdf.index)*2):

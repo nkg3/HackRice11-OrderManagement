@@ -72,10 +72,10 @@
         </div>
         <div class="col-sm-6">
             <h3>Upload File (.xlsx)</h3>
-            <form method="post">
+            <form action="{{ url_for('dash.upload_file') }}" method="post" enctype=multipart/form-data>
                 <div class="mb-3">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile">
+                        <input type="file" name="file" class="custom-file-input" id="file">
                       </div>
                 </div>
                   <div class="mb-3">
