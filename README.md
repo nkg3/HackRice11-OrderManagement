@@ -7,8 +7,10 @@ The Twilio trial account prohibits sending SMS to unauthorized numbers, so you w
 # Installation Instructions
 In the 'HackRice11-OrderManagement' directory, run
 > pipenv shell
+
 > pipenv install
 
 Inside '/FlaskApp', run
 > export FLASK_APP=src
+
 > flask run
