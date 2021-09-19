@@ -79,12 +79,17 @@ def remove_symbol(word: str, symbol: str):
         return word[:-1]
     return word
 
+
 def demo_parse_excel_to_db(path: str):
     database_url = 'https://hackrice11-ordermanageme-327b0-default-rtdb.firebaseio.com/'
     cred_path = Path("../DataFiles/database_private_key.json")  # path to database credential
     excel_path = Path(path)  # path to excel sheets
 
-    init_database(database_url, cred_path)
+    try:
+        init_database(database_url, cred_path)
+    except ValueError:
+        pass
+
     set_with_excel(excel_path, "Equipment Details", (2, 12), (2, 9), "/Equipments")
     set_with_excel(excel_path, "Worker Details", (1, 11), (2, 7), "/Workers")
     set_with_excel(excel_path, "Facility Details", (2, 7), (2, 6), "/Facilities")
