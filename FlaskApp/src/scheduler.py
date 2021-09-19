@@ -6,7 +6,7 @@ sys.path.append('/Users/victorkaplan/Desktop/HackRice/HackRice11-OrderManagement
 import database
 from IPython.display import clear_output
 
-#CURRENT VERSION****************
+#FINAL VERSION (2)****************
 
 #code to read in from database:
 def readin():
@@ -39,32 +39,27 @@ def readin():
     workOrders.head()
     return workers, equip, facil, workOrders
 
-read = readin()
-workers = read[0]
-equip= read[1]
-facil= read[2]
-workOrders= read[3]
-
 def priority(workOrderdf):
     realPriors = workOrderdf['Priority(1-5)']
     times = workOrderdf['Submission Timestamp']
     maxtime = max(times)
     timePrior = ([-(time - maxtime).days for time in times])
-    print((maxtime))
-    print((times[0]))
-    print((maxtime - times[0]))
-    print(timePrior)
     final = (timePrior) + (realPriors)
     workOrderdf['newPrior'] = final
     return workOrderdf
 
-workOrders = priority(workOrders)
 
 #matching functions:
-def dist(facilityloc1, facilityloc2):
-    if facilityloc1 == facilityloc2:
-        return 0
-    return 2
+def dist(facilityloc1, facilityloc2, facildf):
+    lat1 = float((facildf.loc[facildf['Facility'] == facilityloc1])['Latitude'])
+    long1 = float((facildf.loc[facildf['Facility'] == facilityloc1])['Longitude'])
+    faccords1 = [lat1, long1]
+
+    lat2 = float((facildf.loc[facildf['Facility'] == facilityloc2])['Latitude'])
+    long2 = float((facildf.loc[facildf['Facility'] == facilityloc2])['Longitude'])
+    faccords2 = [lat2, long2]
+
+    return int(distance_matrix.distance_result(faccords1,faccords2)[1].split(' ')[0])/10
 
 def rarity(equipdf):
     dicti = {}
@@ -84,7 +79,7 @@ def resetShift(shift, facilitydf, workersdf):
     return None
 
 
-def bid(workerdf, equipType, facility, timeToComplete, shift, equipdf):
+def bid(workerdf, equipType, facility, timeToComplete, shift, equipdf, facildf):
     df = workerdf.copy()
     df = df.loc[df['inTask'] == 'False']
     df = df.loc[df['Shifts'] == shift]
@@ -92,21 +87,22 @@ def bid(workerdf, equipType, facility, timeToComplete, shift, equipdf):
     final = []
     rarities = rarity(equipdf)
     for i in df.index:
-        final.append((i, dist(df.at[i, 'Loc'], facility) + int(timeToComplete) + rarities[equipType]))
+        final.append((i, dist(df.at[i, 'Loc'], facility, facildf) + int(timeToComplete) + rarities[equipType]))
+#         print(dist(df.at[i, 'Loc'], facility, facildf) + int(timeToComplete) + rarities[equipType])
     return final
 
 def pair(workerdf, workOrderdf, facilitydf, shift, equipdf):
     sliceddf = workOrderdf.loc[workOrderdf['inProgress'] == 'False']
     currentJob = sliceddf['newPrior'].idxmax()
-    print(list(sliceddf['newPrior']))
-    print(currentJob)
+#     print(list(sliceddf['newPrior']))
+#     print(currentJob)
 
     if int(facilitydf.loc[facilitydf['Facility'] == (workOrderdf.at[currentJob, 'Facility']), 'Maximum Occupacy']) <= int(facilitydf.loc[facilitydf['Facility'] == (workOrderdf.at[currentJob, 'Facility']), 'workersIn']):
         print('full')
         workOrderdf.at[currentJob, 'newPrior'] -= 1
         return None
 
-    bids = bid(workerdf, workOrderdf.at[currentJob, 'Equipment Type'], workOrderdf.at[currentJob, 'Facility'], workOrderdf.at[currentJob, 'Time to Complete'], shift, equipdf)
+    bids = bid(workerdf, workOrderdf.at[currentJob, 'Equipment Type'], workOrderdf.at[currentJob, 'Facility'], workOrderdf.at[currentJob, 'Time to Complete'], shift, equipdf, facilitydf)
     lowest = math.inf
     lowestPair = None
     for bidPair in bids:
@@ -114,7 +110,7 @@ def pair(workerdf, workOrderdf, facilitydf, shift, equipdf):
             lowest = bidPair[1]
             lowestPair = bidPair
     if lowestPair != None:
-        return (workerdf.at[lowestPair[0], 'Name'], workOrderdf.at[currentJob, 'Work Order ']), (lowestPair[0],currentJob), int(workOrderdf.at[currentJob, 'Time to Complete'])+int(dist(workOrderdf.at[currentJob, 'Facility'], workerdf.at[lowestPair[0], 'Loc']))
+        return (workerdf.at[lowestPair[0], 'Name'], workOrderdf.at[currentJob, 'Work Order ']), (lowestPair[0],currentJob), int(workOrderdf.at[currentJob, 'Time to Complete'])+int(dist(workOrderdf.at[currentJob, 'Facility'], workerdf.at[lowestPair[0], 'Loc'], facilitydf))
     workOrderdf.at[currentJob, 'newPrior'] -= 1
     return None
 
@@ -129,21 +125,23 @@ def update(pair, workerdf, workOrderdf, time, facilitydf):
 
     workOrderdf.at[pair[1], 'inProgress'] = True
     workOrderdf.at[pair[1], 'timeLeft'] = time
+    workOrderdf.at[pair[1], 'Assigned'] = workerdf.at[pair[0], 'Name']
 
     workerdf.at[pair[0], 'inTask'] = True
     workerdf.at[pair[0], 'Loc'] = newloc
     workerdf.at[pair[0], 'TasktimeLeft'] = time
-    workerdf.at[pair[0], 'assigned'] = pair[1]
+    workerdf.at[pair[0], 'assigned'] = workOrderdf.at[pair[1], 'Work Order ']
 
 def assignAll(workerdf, workOrderdf, facilitydf, shift, equipdf):
-    for i in range(len(workOrderdf.index)*2):
+    for i in range(len(workOrderdf.index)):
 #         print(workerdf['inTast'])
 #         print(False in list(workerdf['inTast']))
         if ('False' in list(workerdf['inTask'])):
-            print(i)
+#             print(i)
             pair1 = pair(workerdf, workOrderdf, facilitydf, shift, equipdf)
             if pair1 != None:
                 update(pair1[1], workerdf, workOrderdf, pair1[2], facilitydf)
+
 
 #write to db function:
 def updatedb():
@@ -162,5 +160,24 @@ def updatedb():
     facilName.index = facilName['Facility']
     facilNametodict = facilName.to_dict(orient = 'index')
     database.set_with_dict(facilNametodict, '/Facilities')
+
+    return None
+
+#overall function:
+def updateWholeThing(shiftStr):
+    read = readin()
+    workers = read[0]
+    equip= read[1]
+    facil= read[2]
+    workOrders= read[3]
+
+    resetShift(shiftStr, facil, workers)
+
+    workOrders = priority(workOrders)
+    workers.head()
+
+    assignAll(workers, workOrders, facil, shiftStr, equip)
+
+    updatedb()
 
     return None

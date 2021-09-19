@@ -21,7 +21,7 @@ bp = Blueprint('dash', __name__, url_prefix='/dashboard')
 # Dashboard home
 @bp.route("/")
 def home():
-    return render_template('dashboard/dashboard.html')
+    return render_template('dashboard/orders.html')
 
 # Add new work order
 @bp.route("/addOrder", methods=('GET','POST'))
@@ -48,6 +48,7 @@ def add_order():
         order_id = str(int(max(db.get_under_directory('/WorkOrders').keys()))+1)
 
         new_order={
+                    'Assigned' : 'None',
                     'Equipment ID' : eq_ID,
                     'Equipment Type': eq_type,
                     'Facility' : facility,
@@ -88,6 +89,10 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
+            filepath = UPLOAD_FOLDER+'/'+filename
+            db.demo_parse_excel_to_db(filepath)
+            if os.path.exists(filepath):
+                os.remove(filepath)
             return redirect(url_for('dash.add_order'))
     
     return redirect(url_for('dash.add_order'))

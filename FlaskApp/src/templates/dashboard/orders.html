@@ -4,7 +4,7 @@
 <div class="card my-3 ">
     <div class="card-body">
         <h4 class="card-title">In-Progress Work Orders</h4>
-        <div class="table-responsive text-nowrap">
+        <div class="table-responsive text-nowrap table-wrap">
             <table class="table">
                 <thead>
                     <tr>
@@ -20,26 +20,31 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for order in work_orders %}
+                    {% if work_orders[order]["inProgress"] == "True" %}
                     <tr>
-                        <td>1001</td>
+                        <td>{{order}}</td>
                         <td>Joe</td>
-                        <td>Fac1</td>
-                        <td>Pump</td>
-                        <td>P032</td>
-                        <td>5</td>
+                        <td>{{ work_orders[order]["Facility"] }}</td>
+                        <td>{{work_orders[order]["Equipment Type"]}}</td>
+                        <td>{{work_orders[order]["Equipment ID"]}}</td>
+                        <td>{{work_orders[order]["Priority(1-5)"]}}</td>
                         <td>07:15:20</td>
-                        <td>02:03:15</td>
+                        <td>{{work_orders[order]["Submission Timestamp"]}}</td>
                         <td>04:15:20</td>
                     </tr>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 <div class="card my-3">
     <div class="card-body">
         <h4 class="card-title">Unassigned Work Orders</h4>
-        <div class="table-responsive text-nowrap">
+        <div class="table-responsive text-nowrap table-wrap">
             <table class="table">
                 <thead>
                     <tr>
@@ -52,19 +57,24 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for order in work_orders %}
+                    {% if work_orders[order]["inProgress"] == "False" and work_orders[order]["done"] == "False" %}
                     <tr>
-                        <td>1001</td>
-                        <td>Fac1</td>
-                        <td>Pump</td>
-                        <td>P032</td>
-                        <td>5</td>
-                        <td>02:03:15</td>
+                        <td>{{order}}</td>
+                        <td>{{ work_orders[order]["Facility"] }}</td>
+                        <td>{{work_orders[order]["Equipment Type"]}}</td>
+                        <td>{{work_orders[order]["Equipment ID"]}}</td>
+                        <td>{{work_orders[order]["Priority(1-5)"]}}</td>
+                        <td>{{work_orders[order]["Submission Timestamp"]}}</td>
                     </tr>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 <div class="card my-3 ">
     <div class="card-body">
         <h4 class="card-title">Completed Work Orders</h4>

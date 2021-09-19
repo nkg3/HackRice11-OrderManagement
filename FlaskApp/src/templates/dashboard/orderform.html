@@ -9,32 +9,23 @@
                 <div class="mb-3"><label class="form-label">Facility</label><select class="form-select" id="facility" name="facility" required="">
                     <optgroup label="Select a facility">
                         <option value="" selected="">Select a Facility</option>
-                        <option value="Fac1">Facility 1</option>
-                        <option value="Fac2">Facility 2</option>
-                        <option value="Fac3">Facility 3</option>
+                        {% for facility in facilities %}
+                        <option value={{facility}}>{{facility}}</option>
+                        {% endfor %}
                     </optgroup>
                     </select></div>
                 <div class="mb-3"><label class="form-label">Equipment Type</label><select class="form-select" id="type" name="type" required="">
                         <optgroup label="Select an Equipment Type">
                             <option value="" selected="">Select an Equipment Type</option>
-                            <option value="Pump">Pump</option>
-                            <option value="Compressor">Compressor</option>
-                            <option value="Seperator">Seperator</option>
-                            <option value="Sensor">Sensor</option>
-                            <option value="Security">Security</option>
-                            <option value="Electricity">Electricity</option>
-                            <option value="Networking">Networking</option>
-                            <option value="Vehicle">Vehicle</option>
-                            <option value="HVAC">HVAC</option>
-                            <option value="Conveyer">Conveyer</option>
+                            {% for equipment in equipments %}
+                            <option value={{equipment}}>{{equipment}}</option>
+                            {% endfor %}
+
                         </optgroup>
                     </select></div>
 
                 <label for="equipment-id" class="form-label">Equipment ID</label>
                 <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">:</span>
-                    </div>
                     <input type="text" class="form-control" placeholder="ID" name ="equipment-id" id="equipment-id" aria-label="ID" aria-describedby="basic-addon1">
                 </div>
 
@@ -63,7 +54,7 @@
                 </div>
 
                 <div class="mb-3"><label class="form-label">Time to complete</label>
-                    <input type = "text" class="form-control" name="complete_time" id="complete_time" aria-label="ID">
+                    <input type = "text" class="form-control" placeholder="Time in hours" name="complete_time" id="complete_time" aria-label="ID">
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-primary d-block w-100" type="submit">Submit work order</button>

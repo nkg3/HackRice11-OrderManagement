@@ -1,8 +1,9 @@
 import os
 
 from flask import Flask, render_template
-from . import worker, dashboard, database
+from . import worker, dashboard, database, scheduler
 from .notifier import Notifier
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -32,6 +33,14 @@ def create_app(test_config=None):
     @app.context_processor
     def get_work_orders():
         return dict(work_orders=database.get_under_directory('/WorkOrders'))
+
+    @app.context_processor
+    def get_facilities():
+        return dict(facilities=database.get_under_directory('/Facilities'))
+
+    @app.context_processor
+    def get_equipments():
+        return dict(equipments=database.get_under_directory('/Equipments'))
 
     @app.context_processor
     def db_processor():
