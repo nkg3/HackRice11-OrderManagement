@@ -21,7 +21,7 @@ bp = Blueprint('dash', __name__, url_prefix='/dashboard')
 # Dashboard home
 @bp.route("/")
 def home():
-    return render_template('dashboard/dashboard.html')
+    return render_template('dashboard/orders.html')
 
 # Add new work order
 @bp.route("/addOrder", methods=('GET','POST'))

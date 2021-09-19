@@ -1,8 +1,9 @@
 import os
 
 from flask import Flask, render_template
-from . import worker, dashboard, database
+from . import worker, dashboard, database, scheduler
 from .notifier import Notifier
+
 
 def create_app(test_config=None):
     # create and configure the app

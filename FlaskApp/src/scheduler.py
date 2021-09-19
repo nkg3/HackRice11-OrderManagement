@@ -171,6 +171,8 @@ def updateWholeThing(shiftStr):
     facil= read[2]
     workOrders= read[3]
 
+    resetShift(shiftStr, facil, workers)
+
     workOrders = priority(workOrders)
     workers.head()
 
