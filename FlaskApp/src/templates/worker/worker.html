@@ -7,19 +7,33 @@ Work Orders
 {% block content %}
 <div class = "container-fluid justify-content-center" id="orders">
     {% for order in work_orders %}
-        <div class="row justify-content-center mb-4">
-            <div class="col-sm-6">
-                <div class="card">
+        <div class="row justify-content-center my-5">
+            <div class="col-sm-4">
+                <div {%if work_orders[order]["done"] == "True" %}class="card bg-success"{%else%}class="card bg-secondary"{%endif%}>
                     <div class="card-body">
+                        <ul>
+                            <h2 style="display:inline">Work Order: {{order}}</h2>
+                            <h3 style="display:inline"></h3>
+                        </ul>
                         {% for key, value in work_orders[order].items() %}
+                            {% if key != "Work Order " %}
                             <ul>
-                                <h2 style="display:inline">{{key}} : </h2>
-                                <h3 style="display:inline">{{value}} </h3>
+                                <h4 style="display:inline">{{key}} : </h4>
+                                <h4 style="display:inline">{{value}} </h4>
                             </ul>
+                            {%endif%}
                         {% endfor %}
-                        <form action="{{ url_for('worker.finish', id=order) }}" method = "post">
-                            <input type="submit" id='script' name="submit" value="Run Script">
-                        </form>
+                        <ul>
+                            <form action="{{ url_for('worker.finish', id=order) }}" method = "post">
+                                {%if work_orders[order]["done"] == "True" %}
+                                <input class="btn btn-primary" type="submit" id='script' name="submit" value="Work Order Completed" disabled>
+                                {%else%}
+                                <input class="btn btn-primary" type="submit" id='script' name="submit" value="Complete Work Order">
+                                {%endif%}
+                                
+                            </form>
+                        </ul>
+                        
                     </div>
                 </div>
             </div>
