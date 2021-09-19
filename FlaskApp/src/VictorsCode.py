@@ -6,7 +6,7 @@ sys.path.append('/Users/victorkaplan/Desktop/HackRice/HackRice11-OrderManagement
 import database
 from IPython.display import clear_output
 
-#CURRENT VERSION****************
+#FINAL VERSION (2)****************
 
 #code to read in from database:
 def readin():
@@ -39,12 +39,6 @@ def readin():
     workOrders.head()
     return workers, equip, facil, workOrders
 
-read = readin()
-workers = read[0]
-equip= read[1]
-facil= read[2]
-workOrders= read[3]
-
 def priority(workOrderdf):
     realPriors = workOrderdf['Priority(1-5)']
     times = workOrderdf['Submission Timestamp']
@@ -54,8 +48,6 @@ def priority(workOrderdf):
     workOrderdf['newPrior'] = final
     return workOrderdf
 
-workOrders = priority(workOrders)
-workers.head()
 
 #matching functions:
 def dist(facilityloc1, facilityloc2, facildf):
@@ -168,5 +160,22 @@ def updatedb():
     facilName.index = facilName['Facility']
     facilNametodict = facilName.to_dict(orient = 'index')
     database.set_with_dict(facilNametodict, '/Facilities')
+
+    return None
+
+#overall function:
+def updateWholeThing(shiftStr):
+    read = readin()
+    workers = read[0]
+    equip= read[1]
+    facil= read[2]
+    workOrders= read[3]
+
+    workOrders = priority(workOrders)
+    workers.head()
+
+    assignAll(workers, workOrders, facil, shiftStr, equip)
+
+    updatedb()
 
     return None
