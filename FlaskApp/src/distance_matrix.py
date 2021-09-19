@@ -5,10 +5,12 @@ API_key = 'AIzaSyB49WzrgV2c2ly9IOTsZOmsXnQuWC9DGPI'
 gmaps = googlemaps.Client(key=API_key)
 
 from itertools import tee
+import sys
+sys.path.append('C:/Users/justi/Desktop/Hackathon/HackRice11-OrderManagement/src/Database')
 import database
 
 
-database.init_database("https://hackrice11-ordermanageme-327b0-default-rtdb.firebaseio.com", "./DataFiles/database_private_key.json")
+database.init_database("https://hackrice11-ordermanageme-327b0-default-rtdb.firebaseio.com", "../DataFiles/database_private_key.json")
 fac_info = database.get_under_directory("/Facilities")
 
 # Look up coordinates for Fac1, Fac2, Fac3, Fac4, Fac5
@@ -41,28 +43,24 @@ for num in range(2):
 
 def distance_result(originfac,destfac):
     """
-    Finds the distance and the time it takes to drive from one facility to another
+    Finds the distance and the time it takes to travel from one facility to another
 
     Inputs:
       originfac - the coordinates (latitude, longitude) of the origin
       destfac - the coordinates (latitude, longitude) of the destination
-
-    Returns a list representing distance and duration of trip
     """
     # converts list to tuple
-    origins = tuple(originfac)
-    destinations = tuple(destfac)
+    origin = tuple(originfac)
+    destination = tuple(destfac)
 
-    #empty list - will be used to store calculated distances and time
-    list = []
+    #empty list - will be used to store calculated distances
+    list = [0]
     
     #pass origin and destination variables to distance_matrix function# output in meters
-    distance = gmaps.distance_matrix(origins, destinations, mode='driving')["rows"][0]["elements"][0]["distance"]["text"]
-    time = gmaps.distance_matrix(origins, destinations, mode='driving')["rows"][0]["elements"][0]["duration"]["text"]
-    #append distance and time to list
-    list.append(distance)
-    list.append(time)
-    # returns a list with distance and duration of trip
+    result = gmaps.distance_matrix(origin, destination, mode='driving')["rows"][0]["elements"][0]["distance"]["value"]
+
+    #append result to list
+    list.append(result)
     return list
 
-print(distance_result(fac1,fac2))
+print(distance_result(fac1,fac3))
