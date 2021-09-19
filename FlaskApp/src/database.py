@@ -9,7 +9,6 @@ from pathlib import Path
 DEBUG: bool = False
 PRINT_DATA: bool = False
 
-
 """
 Call init_database first before anything!
 """
@@ -43,10 +42,28 @@ def remove(dir_ref: str):
     reference.delete()
 
 
-def set_with_excel(path: str, sheet_name: str, row_range: tuple, col_range: tuple, dir_ref: str = "/"):
+def set_with_excel(path: str, sheet_name: str, row_range: tuple, col_range: tuple, remove_keys: list = None,
+                   add_keys: list = None,
+                   dir_ref: str = "/"):
+    if remove_keys is None:
+        remove_keys = []
+
+    if add_keys is None:
+        add_keys = []
+
     reference = db.reference(dir_ref)
     parser: ExcelParser = ExcelParser(Path(path))
-    data = parser.parse_sheet(sheet_name, row_range, col_range)
+    data: dict = parser.parse_sheet(sheet_name, row_range, col_range)
+
+    for i in data:  # removing keys
+        for key in remove_keys:
+            try:
+                data[i].pop(key)
+            except KeyError:
+                pass
+        for key in add_keys:
+            data[i][key[0]] = key[1]
+
     reference.set(data)
     if DEBUG:
         print("[Database set] sheet name: " + sheet_name + ", reference dir: " + dir_ref)
@@ -90,10 +107,14 @@ def demo_parse_excel_to_db(path: str):
     except ValueError:
         pass
 
-    set_with_excel(excel_path, "Equipment Details", (2, 12), (2, 9), "/Equipments")
-    set_with_excel(excel_path, "Worker Details", (1, 11), (2, 7), "/Workers")
-    set_with_excel(excel_path, "Facility Details", (2, 7), (2, 6), "/Facilities")
-    set_with_excel(excel_path, "Work Order Examples", (2, 32), (2, 12), "/WorkOrders")
+    set_with_excel(excel_path, "Equipment Details", (2, 12), (2, 9), dir_ref="/Equipments")
+    set_with_excel(excel_path, "Worker Details", (1, 11), (2, 6), add_keys=[("Loc", "None"), ("TasktimeLeft", "0"),
+                                                                            ("assigned", "None"), ("inTask", "False")],
+                   remove_keys=["Latitude", "Longitude"], dir_ref="/Workers")
+    set_with_excel(excel_path, "Facility Details", (2, 7), (2, 5), add_keys=[("workersIn", "0")], dir_ref="/Facilities")
+    set_with_excel(excel_path, "Work Order Examples", (2, 32), (2, 8),
+                   add_keys=[("Assigned", "None"), ("done", "False")
+                       , ("inProgress", "False"), ("newPrior", "0"), ("timeLeft", "0")], dir_ref="/WorkOrders")
 
 
 class ExcelParser:
