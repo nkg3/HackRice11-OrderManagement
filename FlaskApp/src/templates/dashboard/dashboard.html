@@ -6,19 +6,18 @@ Dashboards
 
 {% block content %}
 <nav class="navbar navbar-light navbar-expand-md navigation-clean-button bg-light">
-  <div class="container"><a class="navbar-brand" href="{{ url_for('dash.home') }}">Order Manager</a><button data-bs-toggle="collapse" data-bs-target="#navcol-1" class="navbar-toggler"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+  <div class="container">
+
+    <img src="../static/assets/logo.png" class="logo-img" href="{{ url_for('dash.home') }}"/>
+    <button data-bs-toggle="collapse" data-bs-target="#navcol-1" class="navbar-toggler">
+      <span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon">
+
+      </span></button>
       <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="navbar-nav me-auto">
               <li class="nav-item"><a class="nav-link" href="{{ url_for('dash.home') }}">Dashboard</a></li>
               <li class="nav-item"><a class="nav-link" href="{{ url_for('dash.add_order') }}">Add Work Order</a></li>
           </ul>
-          {% if g.user %}
-            
-          {% else %}
-          <span class="navbar-text actions"><a class="login" href="#">Log In</a><a class="btn btn-light action-button" role="button" href="#">Sign Up</a></span>
-          {% endif %}
-          
-          
       </div>
   </div>
 </nav>

@@ -50,6 +50,7 @@ def add_order():
 
         new_order={
                     'Assigned' : 'None',
+                    'Completion Timestamp' : 'N/A',
                     'Equipment ID' : eq_ID,
                     'Equipment Type': eq_type,
                     'Facility' : facility,
@@ -70,10 +71,6 @@ def add_order():
             #    error = 'Something went wrong! Try again later'
 
         flash(error)
-        if datetime.now().hour >= 12:
-            scheduler.updateWholeThing('Evening')
-        else:
-            scheduler.updateWholeThing('Morning')
 
     return render_template('dashboard/orderform.html')
 

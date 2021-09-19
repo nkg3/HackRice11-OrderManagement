@@ -2,7 +2,6 @@ import sys
 import pandas as pd
 import numpy as np
 import math
-sys.path.append('/Users/victorkaplan/Desktop/HackRice/HackRice11-OrderManagement/src/Database')
 from . import database, distance_matrix, notifier
 from datetime import datetime
 import datetime as dt
@@ -162,6 +161,7 @@ def updatedb(workers, workOrders, facil):
     workOrdersName['Submission Timestamp'] = workOrdersName['Submission Timestamp'].astype(str)
     workOrdersName.index = workOrdersName['Work Order ']
     workOrdersNametodict = workOrdersName.to_dict(orient = 'index')
+    print(workOrdersNametodict, sys.stderr)
     database.set_with_dict(workOrdersNametodict, '/WorkOrders')
 
     facilName = facil.copy()

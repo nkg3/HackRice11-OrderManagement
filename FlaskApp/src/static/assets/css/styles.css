@@ -2,3 +2,8 @@
     height: 240px;
     overflow-y: auto;
   }
+
+.logo-img{
+  height: 80px;
+  width: 80px;
+}
